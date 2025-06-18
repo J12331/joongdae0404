@@ -9,17 +9,19 @@
       box-sizing: border-box;
     }
 
-    body {
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
       font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
       background-color: #f4f6f8;
-      padding: 20px;
-      margin: 0;
     }
 
     h2 {
       text-align: center;
       color: #333;
       font-size: 1.6em;
+      padding: 20px 0 0;
     }
 
     form {
@@ -27,6 +29,7 @@
       padding: 20px;
       border-radius: 12px;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      width: 100%;
       max-width: 600px;
       margin: 0 auto;
     }
@@ -66,9 +69,11 @@
 
     #results {
       margin-top: 20px;
+      width: 100%;
       max-width: 600px;
       margin-left: auto;
       margin-right: auto;
+      padding: 0 10px;
     }
 
     table {
@@ -85,6 +90,7 @@
       padding: 12px 8px;
       text-align: center;
       font-size: 0.95em;
+      word-break: break-word;
     }
 
     th {
@@ -92,13 +98,16 @@
     }
 
     @media (max-width: 480px) {
-      body {
-        padding: 12px;
+      form {
+        padding: 16px;
+        border-radius: 10px;
       }
-
       input, button {
         font-size: 1rem;
         padding: 12px;
+      }
+      h2 {
+        font-size: 1.4em;
       }
     }
   </style>
