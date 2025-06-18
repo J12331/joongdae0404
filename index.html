@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>학생 성적 조회</title>
   <style>
     * {
@@ -105,16 +105,15 @@
 </head>
 <body>
   <h2>학생 성적 조회</h2>
-
   <form id="searchForm">
     <label for="name">학생 이름</label>
-    <input type="text" id="name" required />
+    <input type="text" id="name" required>
 
     <label for="birth">생년월일 (YYMMDD)</label>
-    <input type="text" id="birth" pattern="\\d{6}" required />
+    <input type="text" id="birth" pattern="\\d{6}" required>
 
     <label for="phone">학부모 전화번호 (숫자만)</label>
-    <input type="text" id="phone" pattern="\\d{7,11}" required />
+    <input type="text" id="phone" pattern="\\d{7,11}" required>
 
     <button type="submit">조회</button>
   </form>
@@ -145,7 +144,6 @@
             <td>${row.score}</td>
           </tr>`);
       });
-
       container.appendChild(table);
     }
 
