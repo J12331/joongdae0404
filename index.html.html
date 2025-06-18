@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>학생 성적 조회</title>
+  <style>
+    body {
+      font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+      background-color: #f4f6f8;
+      padding: 20px;
+      margin: 0;
+    }
+    h2 {
+      text-align: center;
+      color: #333;
+      font-size: 1.6em;
+    }
+    form {
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    }
+    label {
+      font-weight: bold;
+      font-size: 0.95em;
+      margin-top: 18px;
+      display: block;
+    }
+    input {
+      width: 100%;
+      padding: 14px;
+      font-size: 1em;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      margin-top: 6px;
+    }
+    button {
+      width: 100%;
+      background-color: #2b78e4;
+      color: white;
+      font-weight: bold;
+      padding: 14px;
+      margin-top: 20px;
+      border: none;
+      border-radius: 6px;
+      font-size: 1em;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #1c5db6;
+    }
+    #results {
+      margin-top: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      margin-top: 10px;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 12px 8px;
+      text-align: center;
+      font-size: 0.95em;
+    }
+    th {
+      background-color: #f0f0f0;
+    }
+    @media (max-width: 480px) {
+      body {
+        padding: 12px;
+      }
+      input, button {
+        font-size: 1rem;
+        padding: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h2>학생 성적 조회</h2>
+  <form id="searchForm">
+    <label for="name">학생 이름</label>
+    <input type="text" id="name" required>
+
+    <label for="birth">생년월일 (YYMMDD)</label>
+    <input type="text" id="birth" pattern="\d{6}" required>
+
+    <label for="phone">학부모 전화번호 (숫자만)</label>
+    <input type="text" id="phone" pattern="\d{7,11}" required>
+
+    <button type="submit">조회</button>
+  </form>
+
+  <div id="results"></div>
+
+  <script>
+    const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzNtffRwhW7NyRNAjJCxyH2f3LhWS2TvB2vHTkPNkaGZaw--_tBfjANJGDz-CyP59cwOg/exec';
+
+    function displayGrades(data) {
+      const container = document.getElementById('results');
+      container.innerHTML = '';
+
+      if (!data || data.length === 0) {
+        container.textContent = '조회 결과가 없습니다.';
+        return;
+      }
+
+      const table = document.createElement('table');
+      table.innerHTML = '<tr><th>이름</th><th>과목</th><th>단원명</th><th>성적</th></tr>';
+
+      data.forEach(row => {
+        table.insertAdjacentHTML('beforeend', `
+          <tr>
+            <td>${row.name}</td>
+            <td>${row.subject}</td>
+            <td>${row.unit}</td>
+            <td>${row.score}</td>
+          </tr>`);
+      });
+      container.appendChild(table);
+    }
+
+    document.getElementById('searchForm').addEventListener('submit', e => {
+      e.preventDefault();
+      const name  = encodeURIComponent(document.getElementById('name').value.trim());
+      const birth = encodeURIComponent(document.getElementById('birth').value.trim());
+      const phone = encodeURIComponent(document.getElementById('phone').value.trim());
+
+      const url = WEB_APP_URL + `?name=${name}&birth=${birth}&phone=${phone}&callback=displayGrades`;
+
+      const prev = document.getElementById('jsonp');
+      if (prev) prev.remove();
+
+      const s = document.createElement('script');
+      s.id = 'jsonp';
+      s.src = url;
+      document.body.appendChild(s);
+    });
+  </script>
+</body>
+</html>
